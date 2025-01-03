@@ -63,7 +63,115 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Test Title'),
       ),
-      body: Container(),
+      body: Container(
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              color: Colors.black26,
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 150,
+                color: Colors.brown,
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Container(
+                margin: const EdgeInsets.only(left: 40, bottom: 150),
+                width: 100,
+                height: 100,
+                color: Colors.amber,
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 200),
+                width: 200,
+                height: 70,
+                color: Colors.lightBlue,
+              ),
+            ),
+            // Align(
+            //   alignment: Alignment.topLeft,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.amber,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.topCenter,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.blue,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.topRight,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.green,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.centerLeft,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.amber,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.center,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.blue,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.green,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.bottomLeft,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.amber,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.bottomCenter,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.blue,
+            //   ),
+            // ),
+            // Align(
+            //   alignment: Alignment.bottomRight,
+            //   child: Container(
+            //     width: 100,
+            //     height: 100,
+            //     color: Colors.green,
+            //   ),
+            // ),
+          ],
+        ),
+      ),
     );
   }
 }
