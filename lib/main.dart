@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,68 +30,85 @@ class MyHomePage extends StatefulWidget {
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       appBar: AppBar(
-//         title: const Text('Test App'),
+//         title: const Text('Flutter App'),
 //       ),
 //       body: Container(),
 //     );
 //   }
 // }
 
-// 디스크에 간단한 데이터 저장 및 불러오기 - SharedPreferences  사용
-class _MyHomePageState extends State<MyHomePage> {
-  late SharedPreferences _prefs;
-  String _username = '';
-  final TextEditingController _usernameController = TextEditingController();
+// Botton Navigation Bar, 화면하단 네비게이션 바 배치 및 setState 사용
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _getUsername();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(
+        () => setState(() => _selectedIndex = _tabController.index));
   }
 
-  _saveUsername() {
-    setState(() {
-      _username = _usernameController.text;
-      _prefs.setString('currentUsername', _username);
-    });
-  }
-
-  _getUsername() async {
-    _prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _username = _prefs.getString('currentUsername') ?? 'Not set';
-    });
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Test App'),
+        title: const Text('Flutter App'),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(15),
-              child: Text('현재 사용자 이름: $_username'),
-            ),
-            Container(
-              padding: const EdgeInsets.all(15),
-              child: TextField(
-                controller: _usernameController,
-                textAlign: TextAlign.left,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Input your username',
-                ),
+      body: _selectedIndex == 0
+          ? tabContainer(context, Colors.indigo, 'Friends Tab')
+          : _selectedIndex == 1
+              ? tabContainer(context, Colors.amber[600] as Color, 'Chats Tab')
+              : tabContainer(context, Colors.blueGrey, 'Settings Tab'),
+      bottomNavigationBar: SizedBox(
+        height: 90,
+        child: TabBar(
+          controller: _tabController,
+          labelColor: Colors.black,
+          tabs: [
+            Tab(
+              icon: Icon(
+                _selectedIndex == 0 ? Icons.person : Icons.person_2_outlined,
               ),
+              text: 'Friends',
             ),
-            TextButton(
-              onPressed: () => _saveUsername(),
-              child: const Text('저장'),
+            Tab(
+              icon: Icon(
+                _selectedIndex == 1 ? Icons.chat : Icons.chat_outlined,
+              ),
+              text: 'Chats',
+            ),
+            Tab(
+              icon: Icon(
+                _selectedIndex == 2 ? Icons.settings : Icons.settings_outlined,
+              ),
+              text: 'Settings',
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget tabContainer(BuildContext con, Color tabColor, String tabText) {
+    return Container(
+      width: MediaQuery.of(con).size.width,
+      height: MediaQuery.of(con).size.height,
+      color: tabColor,
+      child: Center(
+        child: Text(
+          tabText,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
     );
@@ -930,6 +946,67 @@ class _MyHomePageState extends State<MyHomePage> {
 //                 );
 //               }
 //             }),
+//       ),
+//     );
+//   }
+// }
+
+// 디스크에 간단한 데이터 저장 및 불러오기 - SharedPreferences  사용
+// class _MyHomePageState extends State<MyHomePage> {
+//   late SharedPreferences _prefs;
+//   String _username = '';
+//   final TextEditingController _usernameController = TextEditingController();
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _getUsername();
+//   }
+
+//   _saveUsername() {
+//     setState(() {
+//       _username = _usernameController.text;
+//       _prefs.setString('currentUsername', _username);
+//     });
+//   }
+
+//   _getUsername() async {
+//     _prefs = await SharedPreferences.getInstance();
+//     setState(() {
+//       _username = _prefs.getString('currentUsername') ?? 'Not set';
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test App'),
+//       ),
+//       body: Container(
+//         child: Column(
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.all(15),
+//               child: Text('현재 사용자 이름: $_username'),
+//             ),
+//             Container(
+//               padding: const EdgeInsets.all(15),
+//               child: TextField(
+//                 controller: _usernameController,
+//                 textAlign: TextAlign.left,
+//                 decoration: const InputDecoration(
+//                   border: InputBorder.none,
+//                   hintText: 'Input your username',
+//                 ),
+//               ),
+//             ),
+//             TextButton(
+//               onPressed: () => _saveUsername(),
+//               child: const Text('저장'),
+//             ),
+//           ],
+//         ),
 //       ),
 //     );
 //   }
