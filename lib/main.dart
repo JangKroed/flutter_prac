@@ -38,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// 디스크에 간단한 데이터 저장 및 불러오기 - SharedPreferences 사용
+// 디스크에 간단한 데이터 저장 및 불러오기 - SharedPreferences  사용
 class _MyHomePageState extends State<MyHomePage> {
   late SharedPreferences _prefs;
   String _username = '';
