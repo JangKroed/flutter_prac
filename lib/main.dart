@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice_project/second.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,7 +38,7 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// 버튼 만들기기
+// 페이지 이동 - Navigator 사용
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -45,34 +46,17 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Test App'),
       ),
-      body: Container(
-        child: Column(
-          children: [
-            Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.amber,
-                    textStyle: TextStyle(
-                      fontSize: 20,
-                    )),
-                onPressed: () => print('Elevated Button'),
-                child: const Text('Elevated Button'),
-              ),
-            ),
-            Center(
-              child: TextButton(
-                onPressed: () => print('Text Button'),
-                child: const Text('Text Button'),
-              ),
-            ),
-            Center(
-              child: OutlinedButton(
-                onPressed: () => print('Outlined Button'),
-                child: const Text('Outlined Button'),
-              ),
-            ),
-          ],
-        ),
+      body: Center(
+        child: GestureDetector(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SecondView(),
+                )),
+            child: Container(
+                padding: const EdgeInsets.all(15),
+                color: Colors.blue,
+                child: const Text('Get Started'))),
       ),
     );
   }
@@ -773,6 +757,47 @@ class _MyHomePageState extends State<MyHomePage> {
 //             //   // stops: const [0.1, 0.4, 0.7],
 //             // ),
 //             ),
+//       ),
+//     );
+//   }
+// }
+
+// 버튼 만들기
+// class _MyHomePageState extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test App'),
+//       ),
+//       body: Container(
+//         child: Column(
+//           children: [
+//             Center(
+//               child: ElevatedButton(
+//                 style: ElevatedButton.styleFrom(
+//                     backgroundColor: Colors.amber,
+//                     textStyle: TextStyle(
+//                       fontSize: 20,
+//                     )),
+//                 onPressed: () => print('Elevated Button'),
+//                 child: const Text('Elevated Button'),
+//               ),
+//             ),
+//             Center(
+//               child: TextButton(
+//                 onPressed: () => print('Text Button'),
+//                 child: const Text('Text Button'),
+//               ),
+//             ),
+//             Center(
+//               child: OutlinedButton(
+//                 onPressed: () => print('Outlined Button'),
+//                 child: const Text('Outlined Button'),
+//               ),
+//             ),
+//           ],
+//         ),
 //       ),
 //     );
 //   }
