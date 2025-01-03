@@ -55,8 +55,11 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// AlertDialog - 팝업창 띄우기
+// 이미지 보여주기 - network image
 class _MyHomePageState extends State<MyHomePage> {
+  String url =
+      'https://cdn.pixabay.com/photo/2016/10/18/21/22/beach-1751455_960_720.jpg';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,31 +67,12 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Test Title'),
       ),
       body: Container(
-        child: Center(
-          child: TextButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext con) {
-                      return AlertDialog(
-                        title: const Text('Dialog Title'),
-                        content: SingleChildScrollView(
-                          child: Container(
-                            child: const Text('Dialog Content'),
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('Yes')),
-                          TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: const Text('Close'))
-                        ],
-                      );
-                    });
-              },
-              child: const Text('Button')),
+        width: MediaQuery.of(context).size.width,
+        // height: 500,
+        child: Image(
+          height: 400,
+          image: NetworkImage(url),
+          fit: BoxFit.fitHeight,
         ),
       ),
     );
@@ -657,6 +641,46 @@ class _MyHomePageState extends State<MyHomePage> {
 //             //   ),
 //             // ),
 //           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// AlertDialog - 팝업창 띄우기
+// class _MyHomePageState extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test Title'),
+//       ),
+//       body: Container(
+//         child: Center(
+//           child: TextButton(
+//               onPressed: () {
+//                 showDialog(
+//                     context: context,
+//                     builder: (BuildContext con) {
+//                       return AlertDialog(
+//                         title: const Text('Dialog Title'),
+//                         content: SingleChildScrollView(
+//                           child: Container(
+//                             child: const Text('Dialog Content'),
+//                           ),
+//                         ),
+//                         actions: [
+//                           TextButton(
+//                               onPressed: () => Navigator.of(context).pop(),
+//                               child: const Text('Yes')),
+//                           TextButton(
+//                               onPressed: () => Navigator.of(context).pop(),
+//                               child: const Text('Close'))
+//                         ],
+//                       );
+//                     });
+//               },
+//               child: const Text('Button')),
 //         ),
 //       ),
 //     );
