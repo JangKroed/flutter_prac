@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_practice_project/second.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,25 +39,25 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// 페이지 이동 - Navigator 사용
+// 유튜브 영상 삽입
 class _MyHomePageState extends State<MyHomePage> {
+  static String youtubeId = 'r5JZEjnySrU';
+
+  final YoutubePlayerController _con = YoutubePlayerController(
+    initialVideoId: youtubeId,
+    flags: const YoutubePlayerFlags(autoPlay: false),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Test App'),
       ),
-      body: Center(
-        child: GestureDetector(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const SecondView(),
-                )),
-            child: Container(
-                padding: const EdgeInsets.all(15),
-                color: Colors.blue,
-                child: const Text('Get Started'))),
+      body: Container(
+        child: YoutubePlayer(
+          controller: _con,
+        ),
       ),
     );
   }
@@ -798,6 +799,30 @@ class _MyHomePageState extends State<MyHomePage> {
 //             ),
 //           ],
 //         ),
+//       ),
+//     );
+//   }
+// }
+
+// 페이지 이동 - Navigator 사용
+// class _MyHomePageState extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test App'),
+//       ),
+//       body: Center(
+//         child: GestureDetector(
+//             onTap: () => Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (_) => const SecondView(),
+//                 )),
+//             child: Container(
+//                 padding: const EdgeInsets.all(15),
+//                 color: Colors.blue,
+//                 child: const Text('Get Started'))),
 //       ),
 //     );
 //   }
