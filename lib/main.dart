@@ -12,25 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(),
     );
   }
@@ -55,24 +37,31 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// 이미지 보여주기 - network image
+// Flexible, Expanded 사용하여 반응형 만들기
 class _MyHomePageState extends State<MyHomePage> {
-  String url =
-      'https://cdn.pixabay.com/photo/2016/10/18/21/22/beach-1751455_960_720.jpg';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Test Title'),
+        title: const Text('Test App'),
       ),
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        // height: 500,
-        child: Image(
-          height: 400,
-          image: NetworkImage(url),
-          fit: BoxFit.fitHeight,
+        child: Column(
+          children: [
+            Expanded(
+              // fit: FlexFit.tight 탑재
+              flex: 1,
+              child: Container(
+                color: Colors.blue,
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Container(
+                color: Colors.green,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -681,6 +670,30 @@ class _MyHomePageState extends State<MyHomePage> {
 //                     });
 //               },
 //               child: const Text('Button')),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// 이미지 보여주기 - network image
+// class _MyHomePageState extends State<MyHomePage> {
+//   String url =
+//       'https://cdn.pixabay.com/photo/2016/10/18/21/22/beach-1751455_960_720.jpg';
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test Title'),
+//       ),
+//       body: Container(
+//         width: MediaQuery.of(context).size.width,
+//         // height: 500,
+//         child: Image(
+//           height: 400,
+//           image: NetworkImage(url),
+//           fit: BoxFit.fitHeight,
 //         ),
 //       ),
 //     );
