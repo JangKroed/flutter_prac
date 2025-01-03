@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_practice_project/second.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -39,14 +42,15 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// 유튜브 영상 삽입
+// JSON 데이터 불러오기 - Future
 class _MyHomePageState extends State<MyHomePage> {
-  static String youtubeId = 'r5JZEjnySrU';
+  static Future loadJson() async {
+    final String response = await rootBundle.loadString('lib/users.json');
+    final data = await json.decode(response);
+    return data['users'];
+  }
 
-  final YoutubePlayerController _con = YoutubePlayerController(
-    initialVideoId: youtubeId,
-    flags: const YoutubePlayerFlags(autoPlay: false),
-  );
+  Future userList = loadJson();
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +59,31 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Test App'),
       ),
       body: Container(
-        child: YoutubePlayer(
-          controller: _con,
-        ),
+        child: FutureBuilder(
+            future: userList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.all(15),
+                      child: Text(
+                        '${snapshot.data[index]['id']}: ${snapshot.data[index]['username']}',
+                      ),
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return const Center(child: Text('Error'));
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                );
+              }
+            }),
       ),
     );
   }
@@ -823,6 +849,30 @@ class _MyHomePageState extends State<MyHomePage> {
 //                 padding: const EdgeInsets.all(15),
 //                 color: Colors.blue,
 //                 child: const Text('Get Started'))),
+//       ),
+//     );
+//   }
+// }
+
+// 유튜브 영상 삽입
+// class _MyHomePageState extends State<MyHomePage> {
+//   static String youtubeId = 'r5JZEjnySrU';
+
+//   final YoutubePlayerController _con = YoutubePlayerController(
+//     initialVideoId: youtubeId,
+//     flags: const YoutubePlayerFlags(autoPlay: false),
+//   );
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test App'),
+//       ),
+//       body: Container(
+//         child: YoutubePlayer(
+//           controller: _con,
+//         ),
 //       ),
 //     );
 //   }
