@@ -37,32 +37,38 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// Flexible, Expanded 사용하여 반응형 만들기
+// 그라데이션 적용하기
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Test App'),
+        title: const Text('Test Title'),
       ),
       body: Container(
-        child: Column(
-          children: [
-            Expanded(
-              // fit: FlexFit.tight 탑재
-              flex: 1,
-              child: Container(
-                color: Colors.blue,
-              ),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            gradient: RadialGradient(
+                center: Alignment.center,
+                colors: [
+                  Colors.amber[100] as Color,
+                  Colors.amber[300] as Color,
+                  Colors.amber[500] as Color,
+                ],
+                stops: const [0.1, 0.5, 1.0],
+                radius: 1.0)
+            // gradient: LinearGradient(
+            //   colors: [
+            //     Colors.blue[100] as Color,
+            //     Colors.blue[300] as Color,
+            //     Colors.blue[500] as Color,
+            //   ],
+            //   begin: Alignment.topCenter,
+            //   end: Alignment.bottomCenter,
+            //   // stops: const [0.1, 0.4, 0.7],
+            // ),
             ),
-            Flexible(
-              flex: 1,
-              child: Container(
-                color: Colors.green,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -694,6 +700,37 @@ class _MyHomePageState extends State<MyHomePage> {
 //           height: 400,
 //           image: NetworkImage(url),
 //           fit: BoxFit.fitHeight,
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// Flexible, Expanded 사용하여 반응형 만들기
+// class _MyHomePageState extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test App'),
+//       ),
+//       body: Container(
+//         child: Column(
+//           children: [
+//             Expanded(
+//               // fit: FlexFit.tight 탑재
+//               flex: 1,
+//               child: Container(
+//                 color: Colors.blue,
+//               ),
+//             ),
+//             Flexible(
+//               flex: 1,
+//               child: Container(
+//                 color: Colors.green,
+//               ),
+//             ),
+//           ],
 //         ),
 //       ),
 //     );
