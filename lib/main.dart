@@ -55,7 +55,7 @@ class MyHomePage extends StatefulWidget {
 //   }
 // }
 
-// Alien - 정렬하기
+// AlertDialog - 팝업창 띄우기
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -64,112 +64,31 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Test Title'),
       ),
       body: Container(
-        child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              color: Colors.black26,
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 150,
-                color: Colors.brown,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                margin: const EdgeInsets.only(left: 40, bottom: 150),
-                width: 100,
-                height: 100,
-                color: Colors.amber,
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 200),
-                width: 200,
-                height: 70,
-                color: Colors.lightBlue,
-              ),
-            ),
-            // Align(
-            //   alignment: Alignment.topLeft,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.amber,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.topCenter,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.blue,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.topRight,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.green,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.centerLeft,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.amber,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.blue,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.centerRight,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.green,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.bottomLeft,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.amber,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.bottomCenter,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.blue,
-            //   ),
-            // ),
-            // Align(
-            //   alignment: Alignment.bottomRight,
-            //   child: Container(
-            //     width: 100,
-            //     height: 100,
-            //     color: Colors.green,
-            //   ),
-            // ),
-          ],
+        child: Center(
+          child: TextButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext con) {
+                      return AlertDialog(
+                        title: const Text('Dialog Title'),
+                        content: SingleChildScrollView(
+                          child: Container(
+                            child: const Text('Dialog Content'),
+                          ),
+                        ),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('Yes')),
+                          TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('Close'))
+                        ],
+                      );
+                    });
+              },
+              child: const Text('Button')),
         ),
       ),
     );
@@ -620,5 +539,126 @@ class _MyHomePageState extends State<MyHomePage> {
 //             ],
 //           ),
 //         ));
+//   }
+// }
+
+// Alien - 정렬하기
+// class _MyHomePageState extends State<MyHomePage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Test Title'),
+//       ),
+//       body: Container(
+//         child: Stack(
+//           children: [
+//             Container(
+//               width: MediaQuery.of(context).size.width,
+//               height: MediaQuery.of(context).size.height,
+//               color: Colors.black26,
+//             ),
+//             Align(
+//               alignment: Alignment.bottomLeft,
+//               child: Container(
+//                 width: MediaQuery.of(context).size.width,
+//                 height: 150,
+//                 color: Colors.brown,
+//               ),
+//             ),
+//             Align(
+//               alignment: Alignment.bottomLeft,
+//               child: Container(
+//                 margin: const EdgeInsets.only(left: 40, bottom: 150),
+//                 width: 100,
+//                 height: 100,
+//                 color: Colors.amber,
+//               ),
+//             ),
+//             Align(
+//               alignment: Alignment.center,
+//               child: Container(
+//                 margin: const EdgeInsets.only(bottom: 200),
+//                 width: 200,
+//                 height: 70,
+//                 color: Colors.lightBlue,
+//               ),
+//             ),
+//             // Align(
+//             //   alignment: Alignment.topLeft,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.amber,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.topCenter,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.blue,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.topRight,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.green,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.centerLeft,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.amber,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.center,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.blue,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.centerRight,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.green,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.bottomLeft,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.amber,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.bottomCenter,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.blue,
+//             //   ),
+//             // ),
+//             // Align(
+//             //   alignment: Alignment.bottomRight,
+//             //   child: Container(
+//             //     width: 100,
+//             //     height: 100,
+//             //     color: Colors.green,
+//             //   ),
+//             // ),
+//           ],
+//         ),
+//       ),
+//     );
 //   }
 // }
