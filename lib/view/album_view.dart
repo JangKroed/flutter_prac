@@ -10,6 +10,7 @@ class AlbumView extends StatefulWidget {
   State<AlbumView> createState() => _AlbumViewState();
 }
 
+// provider 패턴
 class _AlbumViewState extends State<AlbumView> {
   late List<Album> albumList;
 
@@ -39,13 +40,6 @@ class _AlbumViewState extends State<AlbumView> {
 }
 
 // BLoC 패턴
-// class AlbumView extends StatefulWidget {
-//   const AlbumView({super.key});
-
-//   @override
-//   State<AlbumView> createState() => _AlbumViewState();
-// }
-
 // class _AlbumViewState extends State<AlbumView> {
 //   final AlbumBloc _albumBloc = AlbumBloc();
 
