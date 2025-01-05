@@ -1,48 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_practice_project/countController.dart';
+import 'package:flutter_practice_project/studentController.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final StudentController _con = Get.put(StudentController());
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
+      title: 'GetX Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('GetX Example'),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GetBuilder<CountController>(
-                init: CountController(),
-                builder: (_) => Text(
-                    'Current Count: ${Get.find<CountController>().counter}'),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        body: ListView.builder(
+          itemCount: _con.studentList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              margin: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
+              child: Column(
                 children: [
-                  TextButton(
-                    onPressed: () => Get.find<CountController>().increase(),
-                    child: const Text('증가'),
+                  GetX<StudentController>(
+                    builder: (_) => Text(
+                        'ID: ${_con.studentList[index]().studentId}, Name: ${_con.studentList[index]().studentName}, Grade: ${_con.studentList[index]().studentGrade}'),
                   ),
-                  TextButton(
-                    onPressed: () => Get.find<CountController>().decrease(),
-                    child: const Text('감소'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () => _con.updateStudentName(
+                            _con.newStudentNames[index], index),
+                        child: const Text('이름 변경'),
+                      ),
+                      TextButton(
+                        onPressed: () => _con.updateStudentGrade(
+                            _con.newStudentGrades[index], index),
+                        child: const Text('성적 변경'),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
