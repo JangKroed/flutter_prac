@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GetBuilder<CountController>(
                 init: CountController(),
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
                     onPressed: () => Get.find<CountController>().increase(),
