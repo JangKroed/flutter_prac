@@ -1,84 +1,107 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'notification.dart';
-import 'second.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
-//! Notification을 위한 StreamController 전역 변수 선언
-StreamController<String> streamController = StreamController.broadcast();
+void main() async {
+  runApp(const MyApp());
+}
 
-Future<void> main() async {
-  //! Binding부터 해줍니다.
-  WidgetsFlutterBinding.ensureInitialized();
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  //! Background에서 Notification를 탭해서 앱을 여는 경우를 위한 메소드
-  FlutterLocalNotification.onBackgroundNotificationResponse();
-
-  //! 메인 앱 실행
-  runApp(const MaterialApp(
-    title: 'Flutter App',
-    home: HomePage(),
-  ));
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'Flutter App',
+      home: HomePage(),
+    );
+  }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late final WebViewController _controller;
+
   @override
   void initState() {
-    // 초기화
-    FlutterLocalNotification.init();
-
-    // 3초 후 권한 요청
-    Future.delayed(const Duration(seconds: 3),
-        FlutterLocalNotification.requestNotificationPermission());
-
     super.initState();
-  }
 
-  @override
-  void dispose() {
-    streamController.close();
+    late final PlatformWebViewControllerCreationParams params;
+    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+      params = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+        mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
+      );
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
+    }
 
-    super.dispose();
+    final WebViewController controller =
+        WebViewController.fromPlatformCreationParams(params);
+
+    controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            debugPrint('WebView is loading (progress : $progress%)');
+          },
+          onPageStarted: (String url) {
+            debugPrint('Page started loading: $url');
+          },
+          onPageFinished: (String url) {
+            debugPrint('Page finished loading: $url');
+          },
+          onWebResourceError: (WebResourceError error) {
+            debugPrint('''
+       Page resource error:
+        code: ${error.errorCode}
+        description: ${error.description}
+        errorType: ${error.errorType}
+        isForMainFrame: ${error.isForMainFrame}
+     ''');
+          },
+          onNavigationRequest: (NavigationRequest request) {
+            debugPrint('allowing navigation to ${request.url}');
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..addJavaScriptChannel(
+        'Toaster',
+        onMessageReceived: (JavaScriptMessage message) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message.message)),
+          );
+        },
+      )
+      ..loadRequest(Uri.parse('https://flutter.dev/'));
+
+    if (controller.platform is AndroidWebViewController) {
+      AndroidWebViewController.enableDebugging(true);
+      (controller.platform as AndroidWebViewController)
+          .setMediaPlaybackRequiresUserGesture(false);
+    }
+
+    _controller = controller;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<String>(
-
-          //! Stream을 전달합니다.
-          stream: streamController.stream,
-          builder: (context, snapshot) {
-            //! snapshot을 통해 데이터를 확인합니다.
-            if (snapshot.hasData) {
-              //! 데이터가 'HELLOWORLD'라면 SecondPage로 이동
-              if (snapshot.data == 'HELLOWORLD') {
-                //! 빌드가 먼저 완료된 후에 호출하기 위해 addPostFrameCallback 사용
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const SecondPage();
-                  }));
-                });
-              }
-            }
-
-            return Center(
-              child: TextButton(
-                onPressed: () {
-                  //! 알림 전송
-                  FlutterLocalNotification.showNotification();
-                },
-                child: const Text("알림 보내기"),
-              ),
-            );
-          }),
+      body: SafeArea(
+        top: false,
+        // bottom: false,
+        child: WebViewWidget(controller: _controller),
+      ),
     );
   }
 }
